@@ -128,7 +128,7 @@
         <el-button @click="addFoodTypeClose">取 消</el-button>
         <el-button type="primary" @click="addFoodTypeHandle">确 定</el-button>
       </span>
-    </el-dialog>   
+    </el-dialog>
 
      <!-- 购物车对话框  -->
      <el-dialog
@@ -182,7 +182,7 @@ export default {
   data () {
     return {
       userType: null,
-      userId: this.$store.state.userInfo.id,
+      userId: JSON.parse(window.sessionStorage.getItem('saveUserInfo')).id,
       activeName: '999999',
       identifierList: [], // 菜品种类列表
       keyword: '',
@@ -208,15 +208,15 @@ export default {
         ],
         foodPrice: [
             { required: true, message: '请输入菜品价格', trigger: 'blur' }
-        ],        
+        ],
         foodType: [
             { required: true, message: '请输入菜品类型', trigger: 'change' }
-        ],        
+        ],
         foodIntroduce: [
             { required: true, message: '请输入菜品描述', trigger: 'blur' },
             { min: 5, max: 15, message: '长度在 5到 15 个字符', trigger: 'blur' }
         ],
-        foodPhoto: [{ required: true, message: '请选择图片', trigger: 'blur' }]    
+        foodPhoto: [{ required: true, message: '请选择图片', trigger: 'blur' }]
       },
       identifierDialogVisible: false, // 菜品种类的对话框
       addFoodTypeDialogVisible: false, // 为菜品种类添加菜品对话框
@@ -241,7 +241,7 @@ export default {
 
       handleClick(tab, event) {
         this.activeName = tab.name
-         
+
         this.foodTypeList = []
         this.getFoodTypeList()
       },
@@ -361,8 +361,8 @@ export default {
       submitForm() {
         this.$refs.foodFormRef.validate((valid) => {
           if (!valid) {
-             
-          } 
+
+          }
           // 先转换图片
           this.photoFild()
 
@@ -424,10 +424,10 @@ export default {
         // 当前加入购物车的菜品
         const lists = this.foodAllList.filter(item=>{
           if (item.foodId === id) {
-            return item 
+            return item
           }
         })
-        
+
         // 如果购物车不为空 查看购物车中是否有该菜品
         if (this.cartList) {
           const idx = this.cartList.findIndex(item=>{
@@ -446,7 +446,7 @@ export default {
         // 先把数量初始成1
         lists[0].foodNum = 1
         this.cartList = this.cartList.concat(lists)
-        
+
         console.log(this.cartList)
         window.localStorage.setItem('cart', JSON.stringify(this.cartList))
         this.$message.success('加入购物车成功')
@@ -472,7 +472,7 @@ export default {
           orderFoods: this.cartList,
           userId: this.userId
         }, res=>{
-          console.log(res)
+          // console.log(res)
           this.$message.success('下单成功')
           this.cartDialogVisible = false
         })
@@ -537,7 +537,7 @@ export default {
           }
         }
       }
-  
+
       .cart {
         text-align: center;
         .cartBtn {
@@ -592,7 +592,7 @@ export default {
         float: right;
         width: 30%;
         text-align: center;
-        
+
       }
     }
 

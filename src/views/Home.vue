@@ -58,62 +58,7 @@ export default {
   data() {
     return {
       // 侧边栏数据
-      asideList: [
-        {
-          'id': 1,
-          'pid': 0,
-          'authname': '菜品管理',
-          'path': null,
-          'list': [
-            {
-              'id': 7,
-              'pid': 1,
-              'authname': '菜品列表',
-              'path': '/foodlist',
-              'list': null
-            }
-          ]
-        },
-        {
-          'id': 2,
-          'pid': 0,
-          'authname': '营业额',
-          'path': null,
-          'list': [
-            {
-              'id': 8,
-              'pid': 2,
-              'authname': '营业数据统计',
-              'path': '/branchmessage',
-              'list': null
-            }
-          ]
-        },
-        {
-          'id': 3,
-          'pid': 0,
-          'authname': '用户管理',
-          'path': null,
-          'list': [
-            {
-              'id': 9,
-              'pid': 3,
-              'authname': '新增用户',
-              'path': '/newuser',
-              'list': null
-            },
-            {
-              'id': 10,
-              'pid': 3,
-              'authname': '修改密码',
-              'path': '/changepwd',
-              'list': null
-            }
-
-          ]
-        }        
-
-      ],
+      asideList: [],
       isCollapse: false,
       iconList: {
         '1': 'iconfont icon-bumen',
@@ -133,8 +78,169 @@ export default {
     // this.getAside()
     //  获取链接的激活状态
     this.navActive = window.sessionStorage.getItem('navActive')
+    this.init()
   },
   methods: {
+    // 侧边栏数据
+    init() {
+      // 默认跳转到菜品列表页面
+      this.navActive = '/foodlist'
+
+      // 根据登陆者身份展示侧边栏
+      if (this.type === 1) {
+        this.asideList = [
+          {
+            'id': 1,
+            'pid': 0,
+            'authname': '菜品管理',
+            'path': null,
+            'list': [
+              {
+                'id': 7,
+                'pid': 1,
+                'authname': '菜品列表',
+                'path': '/foodlist',
+                'list': null
+              }
+            ]
+          },
+          {
+            'id': 2,
+            'pid': 0,
+            'authname': '订单管理',
+            'path': null,
+            'list': [
+              {
+                'id': 8,
+                'pid': 2,
+                'authname': '进行中订单',
+                'path': '/bulidingorder',
+                'list': null
+              },
+              {
+                'id': 9,
+                'pid': 2,
+                'authname': '全部订单',
+                'path': '/allorder',
+                'list': null
+              }
+
+            ]
+          },
+          {
+            'id': 3,
+            'pid': 0,
+            'authname': '营业额',
+            'path': null,
+            'list': [
+              {
+                'id': 10,
+                'pid': 3,
+                'authname': '营业数据统计',
+                'path': '/branchmessage',
+                'list': null
+              }
+            ]
+          },
+          {
+            'id': 4,
+            'pid': 0,
+            'authname': '用户管理',
+            'path': null,
+            'list': [
+              {
+                'id': 11,
+                'pid': 4,
+                'authname': '新增用户',
+                'path': '/newuser',
+                'list': null
+              },
+              {
+                'id': 12,
+                'pid': 4,
+                'authname': '修改密码',
+                'path': '/changepwd',
+                'list': null
+              }
+
+            ]
+          }
+
+        ]
+      } else {
+        this.asideList = [
+          {
+            'id': 1,
+            'pid': 0,
+            'authname': '菜品管理',
+            'path': null,
+            'list': [
+              {
+                'id': 7,
+                'pid': 1,
+                'authname': '菜品列表',
+                'path': '/foodlist',
+                'list': null
+              }
+            ]
+          },
+          {
+            'id': 2,
+            'pid': 0,
+            'authname': '订单管理',
+            'path': null,
+            'list': [
+              {
+                'id': 8,
+                'pid': 2,
+                'authname': '我的订单',
+                'path': '/bulidingorder',
+                'list': null
+              }
+
+            ]
+          },
+          // {
+          //   'id': 3,
+          //   'pid': 0,
+          //   'authname': '营业额',
+          //   'path': null,
+          //   'list': [
+          //     {
+          //       'id': 10,
+          //       'pid': 3,
+          //       'authname': '营业数据统计',
+          //       'path': '/branchmessage',
+          //       'list': null
+          //     }
+          //   ]
+          // },
+          {
+            'id': 4,
+            'pid': 0,
+            'authname': '用户管理',
+            'path': null,
+            'list': [
+              // {
+              //   'id': 11,
+              //   'pid': 4,
+              //   'authname': '新增用户',
+              //   'path': '/newuser',
+              //   'list': null
+              // },
+              {
+                'id': 12,
+                'pid': 4,
+                'authname': '修改密码',
+                'path': '/changepwd',
+                'list': null
+              }
+
+            ]
+          }
+        ]
+      }
+    },
     // 退出按钮
     layout() {
       window.sessionStorage.clear('token')
