@@ -6,15 +6,21 @@ const api = {
   LOGIN: '/login',
   // 查询所有菜品
   SELECTALLFOOD: '/food/selectAllFoodList',
-  // 根据菜品种类id查询菜品列表
-  SELECTFOODTYPELIST: '/food/selectFoodList',
-  // 为菜品种类新增菜品 
-  FOODTYPESETFOOD: '/food/FoodTypesetFood',
   // 新增菜品
   ADDFOOD: '/food/addFood',
   FOODIMAGE: '/food/fileUp',
   // 修改菜品
   EDITFOOD: '/food/updateFood',
+  // 删除菜品
+  DELETEFOOD: '/food/deleteFood',
+
+  // 根据菜品种类id查询菜品列表
+  SELECTFOODTYPELIST: '/food/selectFoodList',
+  // 为菜品种类新增菜品
+  FOODTYPESETFOOD: '/food/FoodTypesetFood',
+  // 为菜品种类移除菜品
+  REMOVEFOODFORTYPE: '/food/FoodTypedeleteFood',
+
   // 新增菜品种类
   ADDFOODTYPE: '/foodType/addFoodType',
   // 查询所有菜品种类
@@ -33,7 +39,18 @@ const api = {
   UPDATEPASSWORD: '/user/updatePassWord',
 
   // 为菜品下单
-  USERORDERXIADAN: '/userOrder/xiadan'
+  USERORDERXIADAN: '/userOrder/xiadan',
+  // 加菜
+  JIACAIORDER: '/userOrder/jiacai',
+  // 正在进行中订单
+  BUILDINGORDER: '/userOrder/getType2Order',
+  // 获取当前订单详情
+  REDERDETAIL: '/userOrder/getFoodByOrder',
+  // 订单结算
+  PAYORDER: '/userOrder/jiesuan',
+  // 获取当前所有订单
+  ALLORDER: '/userOrder/getAllOrder'
+
 }
 
 // Api添加主机地址

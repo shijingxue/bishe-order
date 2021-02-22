@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     type: 1,
-    userInfo: {}
+    userInfo: {},
+    orderId: null
   },
   mutations: {
     setType(state, type) {
@@ -16,6 +17,10 @@ export default new Vuex.Store({
 
     saveUserInfo(state, type) {
       state.userInfo = type
+    },
+
+    setOrderId(state, data) {
+      state.orderId = data
     }
   },
   actions: {

@@ -20,7 +20,7 @@
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane :label="iden.foodTypeName" :name="String(iden.foodTypeId)" v-for="(iden) in identifierList" :key="iden.foodTypeId" >
           <div class='food-container'>
-            <el-button class="btn-btm2" type="primary" @click="addFoodTypeDialogVisible=true" v-if="activeName !== '999999' && userType ==1 ">添加菜品</el-button>
+            <el-button class="btn-btm2" type="primary" @click="addFoodTypeDialogVisible=true" v-if="activeName !== '999999' && userType ==1 ">为该种类添加菜品</el-button>
 
             <div v-if="foodTypeList.length == 0">
               暂无菜品！敬请期待哦！
@@ -42,7 +42,8 @@
                   <div class="cart">
                     <el-button class="cartBtn" type="danger" @click="handleAddCart(item.foodId)" :disabled="item.foodType === '1'?false:true">加入购物车</el-button>
                     <el-button type="primary" @click="editFood(item.foodId)">修改</el-button>
-                    <el-button type="warning" @click="deleteFood(item.foodId)">删除</el-button>
+                    <el-button type="warning" @click="removeFood(item.foodId,iden.foodTypeId)" v-if="activeName !== '999999' && userType ==1 ">移除</el-button>
+                    <el-button type="warning" @click="deleteFood(item.foodId)" v-else-if="activeName == '999999' &&userType ==1">删除</el-button>
                   </div>
                 </div>
               </el-col>
@@ -136,7 +137,7 @@
       :visible.sync="cartDialogVisible"
       width="60%">
         <div class="cart-container">
-          <div v-if="!cartList" class="empty">
+          <div v-if="cartList.length === 0" class="empty">
             购物车空空如也哦~
           </div>
 
@@ -161,7 +162,7 @@
         </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="cartDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleCart" :disabled="!cartList">下单</el-button>
+        <el-button type="primary" @click="handleCart" :disabled="cartList.length === 0">{{this.$store.state.orderId?'加菜':'下单'}}</el-button>
       </span>
     </el-dialog>
 
@@ -282,11 +283,13 @@ export default {
       // 为菜品种类添加菜品的多选提交
       addFoodTypeHandle() {
         // console.log(this.checkFoodTypeList)
-        httpUtil.get(api.FOODTYPESETFOOD, {
-          foodTypeId: this.activeName,
+        httpUtil.post(api.FOODTYPESETFOOD, {
+          foodTypeId: Number(this.activeName),
           foodId: this.checkFoodTypeList
         }, res=>{
           this.$message.success('操作成功')
+          this.checkFoodTypeList = []
+          this.addFoodTypeDialogVisible = false
           this.getFoodTypeList()
         })
       },
@@ -294,6 +297,7 @@ export default {
       // 为菜品种类添加菜品的多选关闭
       addFoodTypeClose() {
         this.checkFoodTypeList = []
+        this.addFoodTypeDialogVisible = false
       },
 
       // 添加菜品
@@ -315,6 +319,7 @@ export default {
         // console.log(this.foodForm)
       },
 
+      // 把图片转换成base64格式
       handleChange(file, fileList) {
         // console.log(file)
         this.imageName = file.name
@@ -416,7 +421,44 @@ export default {
 
       // 删除菜品
       deleteFood(id) {
+        this.$confirm('确定要删除该菜品?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          httpUtil.post(api.DELETEFOOD, { foodId: id }, res => {
+            // console.log(res)
+            this.$message.success('删除菜品成功')
+            this.getFoodList()
+            this.getFoodTypeList()
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+      },
 
+      // 为菜品种类移除菜品
+      removeFood(id, foodTypeId) {
+        this.$confirm('确定要移除该菜品?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          httpUtil.post(api.REMOVEFOODFORTYPE, { foodId: id, foodTypeId }, res => {
+            // console.log(res)
+            this.$message.success('移除菜品成功')
+            // this.getFoodList()
+            this.getFoodTypeList()
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
       },
 
       // 加入购物车
@@ -467,14 +509,37 @@ export default {
 
       // 下单
       handleCart() {
-        console.log(this.userId)
-        httpUtil.post(api.USERORDERXIADAN, {
-          orderFoods: this.cartList,
-          userId: this.userId
-        }, res=>{
-          // console.log(res)
-          this.$message.success('下单成功')
-          this.cartDialogVisible = false
+        this.$confirm('确定下单?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const orderId = this.$store.state.orderId
+          let data = {
+            orderFoods: this.cartList,
+            userId: this.userId
+          }
+          // 接口
+          let order = api.USERORDERXIADAN
+          if (orderId) {
+            order = api.JIACAIORDER
+            data = Object.assign(data, { orderId })
+          }
+
+          httpUtil.post(order, data, res=>{
+            // console.log(res)
+            this.$message.success('下单成功')
+            this.cartList = []
+            window.localStorage.setItem('cart', JSON.stringify(this.cartList))
+            this.cartDialogVisible = false
+            // 跳转到订单列表
+            this.$router.push('/bulidingorder')
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消下单'
+          })
         })
       }
 

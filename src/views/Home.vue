@@ -3,7 +3,7 @@
     <el-container class="home-container">
       <el-header>
         <div class="logo">
-          <img src="../assets/logo.png" alt />
+          <!-- <img src="../assets/logo.png" alt /> -->
           餐厅点餐系统
         </div>
         <!-- 退出按钮 -->
@@ -77,15 +77,13 @@ export default {
   created() {
     // this.getAside()
     //  获取链接的激活状态
-    this.navActive = window.sessionStorage.getItem('navActive')
+    const data = '/foodlist'
+    this.navActive = window.sessionStorage.setItem('navActive', data)
     this.init()
   },
   methods: {
     // 侧边栏数据
     init() {
-      // 默认跳转到菜品列表页面
-      this.navActive = '/foodlist'
-
       // 根据登陆者身份展示侧边栏
       if (this.type === 1) {
         this.asideList = [
