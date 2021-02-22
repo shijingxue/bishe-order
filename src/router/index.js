@@ -8,7 +8,7 @@ const NewUser = () => import(/* webpackChunkName:"department" */ '../views/User/
 const ChangePwd = () => import(/* webpackChunkName:"employee" */ '../views/User/ChangePwd.vue')
 const BulidingOrder = () => import(/* webpackChunkName:"employee" */ '../views/Order/BulidingOrder.vue')
 const AllOrder = () => import(/* webpackChunkName:"reward" */ '../views/Order/AllOrder.vue')
-// const Users = () => import(/* webpackChunkName:"user" */ '../views/user/Users.vue')
+const OrderStatistic = () => import(/* webpackChunkName:"user" */ '../views/Statistic/OrderStatistic.vue')
 // const Check = () => import(/* webpackChunkName:"check" */ '../views/check/Check.vue')
 // const Pay = () => import(/* webpackChunkName:"pay" */ '../views/pay/Pay.vue')
 
@@ -53,19 +53,11 @@ const router = new VueRouter({
         {
           path: '/allorder',
           component: AllOrder
+        },
+        {
+          path: '/orderstatistic',
+          component: OrderStatistic
         }
-        // {
-        //   path: '/salaryentry',
-        //   component: Pay
-        // },
-        // {
-        //   path: '/salarychanges',
-        //   component: EmployeeChange
-        // },
-        // {
-        //   path: '/attendance',
-        //   component: Check
-        // }
       ]
     }
   ]

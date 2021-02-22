@@ -128,14 +128,14 @@ export default {
           {
             'id': 3,
             'pid': 0,
-            'authname': '营业额',
+            'authname': '统计',
             'path': null,
             'list': [
               {
                 'id': 10,
                 'pid': 3,
-                'authname': '营业数据统计',
-                'path': '/branchmessage',
+                'authname': '营业额统计',
+                'path': '/orderstatistic',
                 'list': null
               }
             ]
@@ -198,34 +198,12 @@ export default {
 
             ]
           },
-          // {
-          //   'id': 3,
-          //   'pid': 0,
-          //   'authname': '营业额',
-          //   'path': null,
-          //   'list': [
-          //     {
-          //       'id': 10,
-          //       'pid': 3,
-          //       'authname': '营业数据统计',
-          //       'path': '/branchmessage',
-          //       'list': null
-          //     }
-          //   ]
-          // },
           {
             'id': 4,
             'pid': 0,
             'authname': '用户管理',
             'path': null,
             'list': [
-              // {
-              //   'id': 11,
-              //   'pid': 4,
-              //   'authname': '新增用户',
-              //   'path': '/newuser',
-              //   'list': null
-              // },
               {
                 'id': 12,
                 'pid': 4,
