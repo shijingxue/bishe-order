@@ -69,28 +69,30 @@ export default {
         '6': 'iconfont icon-kaoqin'
       },
       //  链接的激活状态
-      navActive: '',
+      // navActive: '',
       // 用户类型
-      type: this.$store.state.type
+      type: window.sessionStorage.getItem('userType')
     }
   },
   created() {
     // this.getAside()
     //  获取链接的激活状态
-    const data = '/foodlist'
-    this.navActive = window.sessionStorage.setItem('navActive', data)
+    // const data = '/foodlist'
+    // this.navActive = window.sessionStorage.setItem('navActive', data)
     this.init()
   },
-  // computed: {
-  //   navActive() {
-  //     return this.$route.path
-  //   }
-  // },
+  computed: {
+    navActive() {
+      return this.$route.path
+    }
+  },
   methods: {
     // 侧边栏数据
     init() {
       // 根据登陆者身份展示侧边栏
-      if (this.type === 1) {
+      // console.log(this.type)
+
+      if (this.type === '1') {
         this.asideList = [
           {
             'id': 1,
@@ -221,6 +223,8 @@ export default {
           }
         ]
       }
+
+      // console.log(this.asideList)
     },
     // 退出按钮
     layout() {
@@ -228,24 +232,16 @@ export default {
       this.$router.push('/login')
       this.$store.commit('setType', null)
     },
-    //  获取侧边栏数据
-    // async getAside() {
-    //   const { data: res } = await this.$http.get('menus')
-    //   // console.log('侧边栏数据', res)
-    //   if (res.code !== '200') {
-    //     return this.$message.error(res.meta.msg)
-    //   }
-    //   this.asideList = res.data
-    // },
+
     // 伸缩侧边栏
     toggleBtn() {
       this.isCollapse = !this.isCollapse
     },
     //  跳转页面  保存链接的激活状态
     toPath(navActive) {
-      window.sessionStorage.setItem('navActive', navActive)
-      this.navActive = navActive
-      // console.log(navActive)
+    //   window.sessionStorage.setItem('navActive', navActive)
+    //   this.navActive = navActive
+    //   // console.log(navActive)
     }
   }
 }

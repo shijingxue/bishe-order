@@ -78,8 +78,8 @@ export default {
       //   规则
       loginFormRules: {
         userName: [{ required: true, message: '请输入账户名', trigger: 'blur' }, { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }],
-        userPassword: [{ required: true, message: '请输入登录密码', trigger: 'blur' }, { min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur' }]
-        //  code: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
+        userPassword: [{ required: true, message: '请输入登录密码', trigger: 'blur' }, { min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur' }],
+         code: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
       },
       UserDialogVisible: false // 注册用户对话框
     }
@@ -134,8 +134,8 @@ export default {
             window.sessionStorage.setItem('userType', res.data.userType)
             this.go()
           }, (error)=>{
-            const message = error.response.data.message
-            // this.$message.error(error)
+            const message = error
+            this.$message.error('用户名或密码错误')
           })
       })
     },
