@@ -47,7 +47,7 @@ export default {
         ],
         userPassword: [
            { required: true, message: '请输入用户密码', trigger: 'blur' },
-            { min: 6, max: 12, message: '长度在 6 到 12 个字符', trigger: 'blur' }         
+            { min: 6, max: 12, message: '长度在 6 到 12 个字符', trigger: 'blur' }
         ],
         userRealname: [
            { required: true, message: '请输入用户真实姓名', trigger: 'blur' }
@@ -70,7 +70,7 @@ export default {
       submitForm() {
         this.$refs.userInfoRef.validate(async valid =>{
           if (!valid) {
-          return 
+          return
           }
           httpUtil.post(api.UPDATEPASSWORD, this.userInfo, res=>{
             // console.log(res)
@@ -78,11 +78,16 @@ export default {
               return this.$message.error('修改密码失败')
              }
             this.userInfo = {}
-            this.$message.success('修改密码成功,请重新登录')
 
-            window.sessionStorage.clear('token')
-            this.$router.push('/login')
-            this.$store.commit('setType', null)
+            // 如果还有未结算订单
+            if (this.$store.state.orderId) {
+              this.$message.success('修改密码成功！')
+            } else {
+              this.$message.success('修改密码成功,请重新登录')
+              window.sessionStorage.clear('token')
+              this.$router.push('/login')
+              this.$store.commit('setType', null)
+            }
           })
          })
       }

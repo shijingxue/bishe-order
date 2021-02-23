@@ -508,12 +508,13 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          // 下单
           const orderId = this.$store.state.orderId
           let data = {
             orderFoods: this.cartList,
             userId: this.userId
           }
-          // 接口
+          // 接口 加菜
           let order = api.USERORDERXIADAN
           if (orderId) {
             order = api.JIACAIORDER

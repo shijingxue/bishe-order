@@ -7,9 +7,9 @@ axios.interceptors.request.use(function (config) {
   // Do something before request is sent
   // Add custom HTTP header
   // TODO:暂时未加入token
-  const Authorization = window.localStorage.getItem('Authorization')
-  if (Authorization) {
-    config.headers['Authorization'] = Authorization
+  const user = window.sessionStorage.getItem('user')
+  if (user) {
+    config.headers['user'] = user
   }
   return config
 }, function (error) {

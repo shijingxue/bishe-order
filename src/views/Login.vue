@@ -125,13 +125,14 @@ export default {
           userName: this.loginlist.userName,
           userPassword: this.loginlist.userPassword }, res=>{
             const data = res.data
-            window.sessionStorage.setItem('saveUserInfo', JSON.stringify(res.data))
-            this.$store.dispatch('saveUserInfo', res.data)
+            window.sessionStorage.setItem('saveUserInfo', JSON.stringify(data))
+            window.sessionStorage.setItem('user', data.id)
+            this.$store.dispatch('saveUserInfo', data)
 
             this.$store.commit('setType', data.userType)
             this.$message.success('登录成功')
             //  保存token
-            window.sessionStorage.setItem('userType', res.data.userType)
+            window.sessionStorage.setItem('userType', data.userType)
             this.go()
           }, (error)=>{
             const message = error

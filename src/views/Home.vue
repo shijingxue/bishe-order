@@ -228,9 +228,13 @@ export default {
     },
     // 退出按钮
     layout() {
-      window.sessionStorage.clear('token')
-      this.$router.push('/login')
-      this.$store.commit('setType', null)
+      if (this.$store.state.orderId) {
+        this.$message.error('还有订单未结算哦！')
+      } else {
+        window.sessionStorage.clear('token')
+        this.$router.push('/login')
+        this.$store.commit('setType', null)
+      }
     },
 
     // 伸缩侧边栏
