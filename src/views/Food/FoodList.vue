@@ -310,9 +310,9 @@ export default {
       // 修改菜品
       editFood(id) {
         this.addDialogVisible = true
-        this.foodTitle = '添加菜品'
+        this.foodTitle = '修改菜品'
         this.foodApi = api.EDITFOOD
-        const food = this.foodList.filter(item=>{
+        const food = this.foodAllList.filter(item=>{
           return item.foodId === id
         })
         this.foodForm = food[0]
@@ -350,17 +350,17 @@ export default {
       },
 
       // 图片先访问接口
-      async photoFild() {
-        await httpUtil.post(api.FOODIMAGE, {
-          name: this.imageName,
-          base64: this.foodForm.foodPhoto
-        }, res=>{
-          // console.log(res.data)
-          this.foodImage = res.data
-          console.log(this.foodImage)
-          this.foodForm.foodPhoto = this.foodImage
-        })
-      },
+      // async photoFild() {
+      //   await httpUtil.post(api.FOODIMAGE, {
+      //     name: this.imageName,
+      //     base64: this.foodForm.foodPhoto
+      //   }, res=>{
+      //     // console.log(res.data)
+      //     this.foodImage = res.data
+      //     console.log(this.foodImage)
+      //     this.foodForm.foodPhoto = this.foodImage
+      //   })
+      // },
 
       // 表单提交
       submitForm() {
@@ -369,17 +369,10 @@ export default {
 
           }
           // 先转换图片
-          this.photoFild()
+          // this.photoFild()
 
           // 再发送添加请求
-          httpUtil.post(this.foodApi, {
-            foodId: this.foodForm.foodId,
-            foodName: this.foodForm.foodName,
-            foodPrice: this.foodForm.foodPrice,
-            foodType: this.foodForm.foodType,
-            foodIntroduce: this.foodForm.foodIntroduce,
-            foodPhoto: this.foodImage
-          }, res=>{
+          httpUtil.post(this.foodApi, this.foodForm, res=>{
             // console.log(this.foodForm.foodPhoto)
             // console.log(res)
             this.$message.success('操作成功')
@@ -393,6 +386,7 @@ export default {
               foodPhoto: undefined
             }
             this.getFoodList()
+            this.foodTypeList()
           })
         })
       },
@@ -489,7 +483,7 @@ export default {
         lists[0].foodNum = 1
         this.cartList = this.cartList.concat(lists)
 
-        console.log(this.cartList)
+        // console.log(this.cartList)
         window.localStorage.setItem('cart', JSON.stringify(this.cartList))
         this.$message.success('加入购物车成功')
       },

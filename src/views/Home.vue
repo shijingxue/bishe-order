@@ -81,6 +81,11 @@ export default {
     this.navActive = window.sessionStorage.setItem('navActive', data)
     this.init()
   },
+  // computed: {
+  //   navActive() {
+  //     return this.$route.path
+  //   }
+  // },
   methods: {
     // 侧边栏数据
     init() {

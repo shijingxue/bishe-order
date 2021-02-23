@@ -49,7 +49,12 @@ const api = {
   // 订单结算
   PAYORDER: '/userOrder/jiesuan',
   // 获取当前所有订单
-  ALLORDER: '/userOrder/getAllOrder'
+  ALLORDER: '/userOrder/getAllOrder',
+
+  // 营业额统计
+  ORDERCOUNT: '/userOrder/getUserOrderCount',
+  // 营业额折线图
+  ORDERSTATISTIC: '/userOrder/getZhouCount'
 
 }
 
