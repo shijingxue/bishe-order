@@ -63,15 +63,15 @@ const router = new VueRouter({
   ]
 })
 // 路由导航守卫
-// router.beforeEach((to, from, next) => {
-//   if (to.path === '/login') {
-//     return next()
-//   }
-//   //  如果访问的不是登录页 则验证他们的token
-//   const isToken = window.sessionStorage.getItem('token')
-//   if (!isToken) {
-//     return next('/login')
-//   }
-//   next()
-// })
+router.beforeEach((to, from, next) => {
+  if (to.path === '/login') {
+    return next()
+  }
+  //  如果访问的不是登录页 则验证他们的token
+  const isToken = window.sessionStorage.getItem('user')
+  if (!isToken) {
+    return next('/login')
+  }
+  next()
+})
 export default router
