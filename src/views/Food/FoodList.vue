@@ -10,9 +10,11 @@
       </el-input>
       <el-button class="searchBtn" type="primary" @click="handelSearch">搜索</el-button>
       <div class="btn-box">
-        <el-button type="success" @click="addFood"  v-if="userType ==1 ">添加菜品</el-button>
-        <el-button type="primary" @click="identifierDialogVisible = !identifierDialogVisible" v-if="userType ==1 ">管理菜品种类</el-button>
-        <el-button type="primary" @click="cartDialogVisible= !cartDialogVisible" v-if="userType ==0 ">购物车</el-button>
+        <div  v-if=" userType ==1 ">
+          <el-button type="success" @click="addFood" >添加菜品</el-button>
+          <el-button type="primary" @click="identifierDialogVisible = !identifierDialogVisible">管理菜品种类</el-button>
+        </div>
+        <el-button type="primary" @click="cartDialogVisible= !cartDialogVisible" v-else>购物车</el-button>
       </div>
     </div>
 
@@ -40,10 +42,12 @@
                     </div>
                   </div>
                   <div class="cart">
-                    <el-button class="cartBtn" type="danger" v-if="userType ==0 " @click="handleAddCart(item.foodId)" :disabled="item.foodType === '1'?false:true">加入购物车</el-button>
-                    <el-button type="primary" @click="editFood(item.foodId)">修改</el-button>
-                    <el-button type="warning" @click="removeFood(item.foodId,iden.foodTypeId)" v-if="activeName !== '999999' && userType ==1 ">移除</el-button>
-                    <el-button type="warning" @click="deleteFood(item.foodId)" v-else-if="activeName == '999999' &&userType ==1">删除</el-button>
+                    <div v-if=" userType ==1 ">
+                      <el-button type="primary"  @click="editFood(item.foodId)">修改</el-button>
+                      <el-button type="warning" @click="removeFood(item.foodId,iden.foodTypeId)" v-if="activeName !== '999999' && userType ==1 ">移除</el-button>
+                      <el-button type="warning" @click="deleteFood(item.foodId)" v-else-if="activeName == '999999' && userType ==1">删除</el-button>
+                    </div>
+                    <el-button v-else class="cartBtn" type="danger" @click="handleAddCart(item.foodId)" :disabled="item.foodType === '1'?false:true">加入购物车</el-button>
                   </div>
                 </div>
               </el-col>
