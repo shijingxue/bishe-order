@@ -7,16 +7,16 @@
       <div class="box_right">
         <el-form :model="userInfo" :rules="userInfoRules" ref="userInfoRef" label-width="120px" class="demo-ruleForm">
           <el-form-item label="用户账号" prop="userName">
-            <el-input v-model="userInfo.userName"></el-input>
+            <el-input v-model="userInfo.userName" disabled></el-input>
           </el-form-item>
           <el-form-item label="用户密码" prop="userPassword">
             <el-input v-model="userInfo.userPassword" type="password"></el-input>
           </el-form-item>
           <el-form-item label="用户真实姓名" prop="userRealname">
-            <el-input v-model="userInfo.userRealname"></el-input>
+            <el-input v-model="userInfo.userRealname" disabled></el-input>
           </el-form-item>
           <el-form-item label="用户类别" prop="userType">
-            <el-select v-model="userInfo.userType" placeholder="请选择用户类别">
+            <el-select v-model="userInfo.userType" placeholder="请选择用户类别" disabled>
             <el-option v-if="this.$store.state.type == 1" label="超级管理员" value="1" ></el-option>
             <el-option v-else label="普通用户" value="0" ></el-option>
           </el-select>
@@ -61,10 +61,13 @@ export default {
     }
   },
   created () {
-    this.userInfo = this.$store.state.userInfo
-    this.userInfo.userPassword = ''
+    this.init()
   },
   methods: {
+      init() {
+        this.userInfo = JSON.parse(window.sessionStorage.getItem('saveUserInfo'))
+        this.userInfo.userPassword = ''
+      },
 
       // 修改密码
       submitForm() {
