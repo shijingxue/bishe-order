@@ -240,14 +240,17 @@ export default {
   },
   methods: {
 
+      // 搜索
       handelSearch() {
         this.getFoodList()
       },
 
+      // tab栏切换
       handleClick(tab, event) {
         this.activeName = tab.name
-
+        // 先把各类菜品列表数据清空
         this.foodTypeList = []
+        // 获取各类菜品数据
         this.getFoodTypeList()
       },
 
@@ -349,6 +352,7 @@ export default {
           reader.onerror = reject
         })
       },
+
       beforeUpload(file) {
         return false
       },
@@ -396,7 +400,8 @@ export default {
       },
 
       refresh() {
-        this.getFoodList()
+        this.getIdentifierList()
+        // this.getFoodList()
       },
 
       // 表单重置

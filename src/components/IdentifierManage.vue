@@ -265,6 +265,9 @@
 
               // 重新请求菜品种类列表
               this.getIdentifierList()
+
+              // 刷新项目列表更新项目菜品种类
+              this.$emit('refresh')
             }
           }, error => {
             const message = error.response.data.message
